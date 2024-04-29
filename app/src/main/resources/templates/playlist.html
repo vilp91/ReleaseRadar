@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Playlists</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <h1>Playlists</h1>
+
+    <!-- Button to create a new playlist -->
+    <a href="/playlists/create" class="btn btn-primary mb-3">Create New Playlist</a>
+
+    <!-- Display list of playlists -->
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Tracks</th>
+                <th>Albums</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Iterate over a list of playlists and display them -->
+            <tr th:each="playlist : ${playlists}">
+                <td th:text="${playlist.id}"></td>
+                <td th:text="${playlist.name}"></td>
+                <td>
+                    <!-- Display list of tracks -->
+                    <ul>
+                        <li th:each="trackId : ${playlist.trackIds}" th:text="${trackIds}"></li>
+                    </ul>
+                </td>
+                <td>
+                    <!-- Display list of albums -->
+                    <ul>
+                        <li th:each="albumId : ${playlist.albumIds}" th:text="${albumIds}"></li>
+                    </ul>
+                </td>
+                <td>
+                    <!-- Actions for each playlist -->
+                    <a th:href="@{/playlists/view/{id}(id=${playlist.id})}" class="btn btn-info">View</a>
+                    <a th:href="@{/playlists/edit/{id}(id=${playlist.id})}" class="btn btn-warning">Edit</a>
+                    <a th:href="@{/playlists/delete/{id}(id=${playlist.id})}" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Display a custom error message if something goes wrong -->
+    <div th:if="${errorMessage}">
+        <div class="alert alert-danger" th:text="${errorMessage}"></div>
+    </div>
+
+</div>
+</body>
+</html>
+
+
+

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View Playlist</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css"> <!-- Link to your CSS -->
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="playlists/list">Back to Playlist List</a></li>
+            <li><a href="/">Home</a></li>
+        </ul>
+    </nav>
+
+    <!-- Playlist Information -->
+    <h1>Playlist: [[${playlist.name}]]</h1>
+
+    <!-- Display the Tracks -->
+    <h2>Tracks</h2>
+    <ul>
+        <!-- Loop through the list of tracks and display their names -->
+        <li th:each="trackId : ${playlist.trackIds}">
+            [[${trackId}]]
+            <!-- Button to delete a track from the playlist -->
+            <a th:href="@{/playlists/deleteTrack/{id}(id=${track.id})}" onclick="return confirm('Are you sure you want to delete this track?')">Delete</a>
+        </li>
+    </ul>
+
+    <!-- Display the Albums -->
+    <h2>Albums</h2>
+    <ul>
+        <!-- Loop through the list of albums and display their names -->
+        <li th:each="albumId : ${playlist.albumIds}">
+            [[${albumId}]]
+            <!-- Button to delete an album from the playlist -->
+            <a th:href="@{/playlists/deleteAlbum/{id}(id=${album.id})}" onclick="return confirm('Are you sure you want to delete this album?')">Delete</a>
+        </li>
+        <li th:unless="${playlist.albumIds}">No albums available</li>
+    </ul>
+
+</body>
+</html>
